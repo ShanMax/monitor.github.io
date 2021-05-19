@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取过期时间</title>
+    <style>
+        * {
+            box-sizing: content-box;
+        }
+        #main {
+            max-width: 500px;
+            height: 100%;
+            margin: 10px 20px;
+        }
+        .l-c {
+            width: 100px;
+            display: inline-block;
+            text-align: right;
+        }
+        .scrq,.bzq,.gqrq {
+            display: flex;
+            margin-top: 15px;
+        }
+        .scrq > input,.bzq > input,.gqrq > span {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="scrq">
+            <label class="l-c" for="scrq">生产日期：</label>
+            <input type="date" name="scrq" id="scrq" value="2021-01-01">
+        </div>
+        <div class="bzq">
+            <label class="l-c" for="bzq">保质期(天)：</label>
+            <input type="number" name="bzq" id="bzq" value="180">
+        </div>
+        <div class="gqrq">
+            <label class="l-c" for="gqrq">过期日期：</label>
+            <span id="gqrq"></span>
+        </div>
+    </div>
+    <script>
+        let scrq = document.getElementById('scrq'),
+            bzq = document.getElementById('bzq'),
+            gqrq = document.getElementById('gqrq');
+        let date = new Date(scrq.value);
+        date.setDate(date.getDate() + +bzq.value);
+        gqrq.innerText = date.toLocaleDateString();
+        scrq.addEventListener('change', res => {
+            let date = new Date(res.target.value);
+            date.setDate(date.getDate() + +bzq.value);
+            gqrq.innerText = date.toLocaleDateString();
+        });
+        bzq.addEventListener('input', res => {
+            let date = new Date(scrq.value);
+            date.setDate(date.getDate() + +res.target.value);
+            gqrq.innerText = date.toLocaleDateString();
+        });
+    </script>
+    
+</body>
+</html>
